@@ -40,7 +40,8 @@ function sortTable(sortValue) {
   if (sortValue === 'Name' || sortValue === 'Position') {
     return employees.sort((employee1, employee2) => {
       return employee1[sortValue.toLowerCase()].localeCompare(
-        employee2[sortValue.toLowerCase()]);
+        employee2[sortValue.toLowerCase()],
+      );
     });
   }
 }
