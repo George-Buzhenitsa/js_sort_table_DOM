@@ -5,19 +5,15 @@ const tableHeader = document.querySelector('thead tr');
 tableHeader.addEventListener('click', (e) => {
   sortTable(e.target.textContent);
 
-  for (let i = 0; i < tableBody.length; i++) {
-    for (let k = 0; k < tableBody[i].children.length; k++) {
-      const currentEmployee =
-        emloyees[i][tableHeader.children[k].textContent.toLowerCase()];
-
-      tableBody[i].children[k].innerHTML = currentEmployee;
-    }
-  }
+  employees.forEach((employee) => {
+    document.querySelector('tbody').append(employee.table);
+  });
 });
 
 const tableBody = document.querySelectorAll('tbody tr');
-const emloyees = Array.from(tableBody).map((employee) => {
+const employees = Array.from(tableBody).map((employee) => {
   return {
+    table: employee,
     name: employee.children[0].textContent,
     position: employee.children[1].textContent,
     age: +employee.children[2].textContent,
@@ -27,13 +23,13 @@ const emloyees = Array.from(tableBody).map((employee) => {
 
 function sortTable(sortValue) {
   if (sortValue === 'Age') {
-    return emloyees.sort((employee1, employee2) => {
+    return employees.sort((employee1, employee2) => {
       return employee1.age - employee2.age;
     });
   }
 
   if (sortValue === 'Salary') {
-    return emloyees.sort((employee1, employee2) => {
+    return employees.sort((employee1, employee2) => {
       const empl1Salary = +employee1.salary.slice(1).split(',').join('');
       const empl2Salary = +employee2.salary.slice(1).split(',').join('');
 
@@ -42,7 +38,7 @@ function sortTable(sortValue) {
   }
 
   if (sortValue === 'Name' || sortValue === 'Position') {
-    return emloyees.sort((employee1, employee2) => {
+    return employees.sort((employee1, employee2) => {
       return employee1[sortValue.toLowerCase()].localeCompare(
         employee2[sortValue.toLowerCase()]);
     });
